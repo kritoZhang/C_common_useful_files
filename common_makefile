@@ -1,0 +1,19 @@
+CC = gcc
+CFLAGS = -Wall -g
+obj_dir = build
+src_dir = src
+
+# 自动生成源文件列表
+SRC_FILES := $(shell find $(src_dir) -name '*.c')
+OBJ_FILES := $(patsubst $(src_dir)/%.c, $(obj_dir)/%.o, $(SRC_FILES))
+
+all: $(OBJ_FILES)
+
+# 自动为每个目标文件生成规则
+$(obj_dir)/%.o: $(src_dir)/%.c
+	@echo "Compiling $< to $@"
+	@mkdir -p $(obj_dir)
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+clean:
+	rm -rf $(obj_dir)
