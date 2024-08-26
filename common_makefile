@@ -4,7 +4,7 @@ obj_dir = build
 src_dir = src
 
 # 自动生成源文件列表
-SRC_FILES := $(shell find $(src_dir) -name '*.c')
+SRC_FILES := $(shell find $(src_dir) -maxdepth 1 -name '*.c')
 OBJ_FILES := $(patsubst $(src_dir)/%.c, $(obj_dir)/%.o, $(SRC_FILES))
 
 all: $(OBJ_FILES)
