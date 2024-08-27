@@ -1,12 +1,12 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -MMD
 obj_dir = build
 src_dir = src
 
 # 自动生成源文件列表
 SRC_FILES := $(shell find $(src_dir) -maxdepth 1 -name '*.c')
 OBJ_FILES := $(patsubst $(src_dir)/%.c, $(obj_dir)/%.o, $(SRC_FILES))
-
+DEP_FILES := $(OBJ_FILSE:.o=.d)
 all: $(OBJ_FILES)
 
 # 自动为每个目标文件生成规则
@@ -17,3 +17,4 @@ $(obj_dir)/%.o: $(src_dir)/%.c
 
 clean:
 	rm -rf $(obj_dir)
+-include $(DEP_FILES)
