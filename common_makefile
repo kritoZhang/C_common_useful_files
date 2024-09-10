@@ -2,12 +2,16 @@ CC = gcc
 CFLAGS = -Wall -g -MMD
 obj_dir = build
 src_dir = src
+target = demo.elf
 
 # 自动生成源文件列表
 SRC_FILES := $(shell find $(src_dir) -maxdepth 1 -name '*.c')
 OBJ_FILES := $(patsubst $(src_dir)/%.c, $(obj_dir)/%.o, $(SRC_FILES))
 DEP_FILES := $(OBJ_FILSE:.o=.d)
-all: $(OBJ_FILES)
+all: $(target)
+
+$(target):$(OBJ_FILES)
+  $(CC) $< -o $@ -Wl,-Map=$(basename $(TARGET)).map
 
 # 自动为每个目标文件生成规则
 $(obj_dir)/%.o: $(src_dir)/%.c
